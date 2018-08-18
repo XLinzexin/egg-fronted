@@ -16,7 +16,7 @@ class Register extends React.Component {
     console.log(formData);
     const { name, password } = formData;
     axios.post("/user", { name, password }).then(res => {
-      if (res.code == 10000) {
+      if (res.code == 1000) {
         window.location.replace("#/login");
       }
     });

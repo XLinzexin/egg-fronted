@@ -16,7 +16,7 @@ class Login extends React.Component {
     console.log(formData);
     const { name, password } = formData;
     axios.post("/user/session", { name, password }).then(res => {
-      if (res.code == 10000) {
+      if (res.code == 1000) {
         window.location.replace("#/app/home/index");
       }
     });
@@ -31,7 +31,7 @@ class Login extends React.Component {
       <div className="login">
         <div className="login-form">
           <div className="login-logo">
-            <span>红人装后台</span>
+            <span>登录</span>
           </div>
           <Form onSubmit={this.handleSubmit} style={{ maxWidth: "300px" }}>
             <FormItem>
@@ -42,7 +42,7 @@ class Login extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "管理员输入admin, 游客输入guest"
+                      message: ""
                     }
                   ]
                 })}
@@ -57,7 +57,7 @@ class Login extends React.Component {
                   rules: [
                     {
                       required: true,
-                      message: "请输入密码"
+                      message: ""
                     }
                   ]
                 })}

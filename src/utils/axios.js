@@ -46,7 +46,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     let res = response.data;
-    if (res.code == 10002) {
+    if (res.code == 1002) {
       window.location.replace("#/login");
     }
     return res;
