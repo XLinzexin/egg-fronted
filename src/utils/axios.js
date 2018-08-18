@@ -47,7 +47,8 @@ axios.interceptors.response.use(
   response => {
     let res = response.data;
     if (res.code == 1002) {
-      window.location.replace("#/login");
+      // window.location.replace("#/login");
+      this.props.history.push("/login");
     }
     return res;
   },

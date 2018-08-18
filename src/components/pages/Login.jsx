@@ -17,7 +17,8 @@ class Login extends React.Component {
     const { name, password } = formData;
     axios.post("/user/session", { name, password }).then(res => {
       if (res.code == 1000) {
-        window.location.replace("#/app/home/index");
+        // window.location.replace("#/app/home/index");
+        this.props.history.push("/app/home/index");
       }
     });
   };

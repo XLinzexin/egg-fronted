@@ -21,13 +21,12 @@ class Empty extends Component {
 class CRouter extends Component {
   requireAuth = component => {
     const { admin } = this.props;
-    console.log(admin.login, component);
     if (admin.login) {
       return component;
     } else {
       return component;
-      // window.location.replace("#/login");
-      return Empty;
+      // this.props.history.push("/login");
+      // return Empty;
     }
   };
   render() {
