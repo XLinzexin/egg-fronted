@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { formDataAction } from "../action";
 
-export default function(Component, storeArray) {
+export default function(Component, modelStore, storeArray) {
   const mapStateToProps = store => {
-    const obj = {};
+    const obj = {
+      [modelStore]: store[modelStore]
+    };
     storeArray.forEach(item => {
       obj[item] = store[item];
     });
