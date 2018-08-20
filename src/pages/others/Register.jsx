@@ -74,4 +74,4 @@ class Register extends React.Component {
     );
   }
 }
-export default bindModel(Register);
+export default bindModel(Register, ["formData"]);

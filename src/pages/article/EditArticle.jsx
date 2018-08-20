@@ -25,4 +25,4 @@ class EditArticle extends React.Component {
   }
 }
 
-export default bindModel(EditArticle);
+export default bindModel(EditArticle, ["editor", "formData"]);
