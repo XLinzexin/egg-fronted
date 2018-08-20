@@ -5,9 +5,9 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import NotFound from "./components/pages/NotFound";
-import Login from "./components/pages/Login";
-import Register from "./components/pages/Register";
+import NotFound from "./pages/others/NotFound";
+import Login from "./pages/others/Login";
+import Register from "./pages/others/Register";
 import App from "./App";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -31,7 +31,7 @@ class Page extends Component {
           <Route
             exact
             path="/"
-            render={() => <Redirect to="/app/jddc/Product" push />}
+            render={() => <Redirect to="/app/home/index" push />}
           />
           <Route path="/app" component={App} />
           <Route path="/404" component={NotFound} />

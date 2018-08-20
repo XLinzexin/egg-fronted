@@ -1,9 +1,7 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
-import { createForm, createFormField, formShape } from "rc-form";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { getAdminInfo, adminAction, formDataAction } from "../../action";
+import bindModel from "../../utils/bindModel";
 import axios from "axios";
 
 const FormItem = Form.Item;
@@ -17,15 +15,11 @@ class Register extends React.Component {
     const { name, password } = formData;
     axios.post("/user", { name, password }).then(res => {
       if (res.code == 1000) {
-        // window.location.replace("#/login");
         this.props.history.push("/login");
       }
     });
   };
-  componentWillUnmount() {
-    const { setStore } = this.props;
-    setStore(formDataAction.clear());
-  }
+  componentWillUnmount() {}
   render() {
     const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
     return (
@@ -80,39 +74,4 @@ class Register extends React.Component {
     );
   }
 }
-
-const mapStateToProps = store => {
-  return {
-    formData: store.formData,
-    admin: store.admin
-  };
-};
-const mapDispatchToProps = dispatch => ({
-  //把 dispatch 绑定到方法中，隐式调用
-  setStore: bindActionCreators(data => data, dispatch)
-});
-
-const mapPropsToFields = props => {
-  let { formData } = props;
-  let obj = {};
-  for (let k in formData) {
-    let item = formData[k];
-    obj[k] = createFormField({
-      value: item
-    });
-  }
-  return obj;
-};
-const onFieldsChange = (props, fields) => {
-  let { setStore, formData } = props;
-  for (let k in fields) {
-    let item = fields[k];
-    formData[k] = item.value;
-  }
-  setStore(formDataAction.set(formData));
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(createForm({ mapPropsToFields, onFieldsChange })(Register));
+export default bindModel(Register);

@@ -7,9 +7,10 @@ import {
   Redirect
 } from "react-router-dom";
 // import { browserHistory } from 'react-router'
-import Home from "../components/home/index";
-// import Convenient from '../components/advertising/Convenient';
-// import Dofu from '../components/advertising/Dofu';
+import Home from "../pages/home/index";
+import EditArticle from "../pages/article/EditArticle";
+// import Convenient from '../pages/advertising/Convenient';
+// import Dofu from '../pages/advertising/Dofu';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -39,8 +40,11 @@ class CRouter extends Component {
             path="/app/home/index"
             component={this.requireAuth(Home)}
           />
-          {/* <Route exact path="/app/advertising/Convenient" component={Convenient} />
-                    <Route exact path="/app/advertising/Dofu" component={Dofu} /> */}
+          <Route
+            exact
+            path="/app/article/EditArticle"
+            component={this.requireAuth(EditArticle)}
+          />
           <Route render={() => <Redirect to="/404" />} />
         </Switch>
       </Router>

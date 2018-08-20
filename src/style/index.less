@@ -1,24 +1,24 @@
 @import "login.less";
-#root{
+#root {
   height: 100%;
 }
-.ant-layout{
+.ant-layout {
   height: 100%;
-  .logo{
+  .logo {
     height: 32px;
     background: #27ada2;
     border-radius: 6px;
     margin: 16px;
   }
-  .ant-layout-sider-collapsed{
-    .anticon{
+  .ant-layout-sider-collapsed {
+    .anticon {
       font-size: 16px;
       margin-left: 8px;
     }
-    .nav-text{
+    .nav-text {
       display: none;
     }
-    .ant-menu-submenu-vertical > .ant-menu-submenu-title:after{
+    .ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
       display: none;
     }
     .ant-menu-dark:not(.ant-menu-inline) .ant-menu-submenu-open {
@@ -29,11 +29,11 @@
     margin: 10px 0 10px 0;
   }
 }
-.gutter-example{
-  .ant-row{
+.gutter-example {
+  .ant-row {
     //margin-left: 0 !important;
     //margin-right: 0 !important;
-    >div{
+    > div {
       background: transparent;
       border: 0;
     }
@@ -46,5 +46,13 @@
 :global {
   .ant-card-head-title {
     font-size: 14px !important;
+  }
+}
+.section-form {
+  &-item > input {
+    max-width: 460px;
+  }
+  &-item:not(:last-child) {
+    margin-bottom: 10px;
   }
 }

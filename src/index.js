@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from "redux";
 import reducer from "./reducer";
 import { AppContainer } from "react-hot-loader";
 import Page from "./Page";
+
 import "./index.less";
 import "./utils/axios";
 
