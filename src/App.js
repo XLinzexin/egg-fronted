@@ -43,16 +43,21 @@ class App extends Component {
         {!globalData.isMobile && (
           <SiderCustom collapsed={this.state.collapsed} />
         )}
-        <Layout style={{ flexDirection: "column" }}>
+        <Layout style={{ flexDirection: "column", minHeight: "100vh" }}>
           <HeaderCustom
             toggle={this.toggle}
             collapsed={this.state.collapsed}
             user={admin.data || {}}
           />
-          <Content style={{ margin: "20px", overflow: "initial" }}>
+          <Content
+            style={{
+              padding: "20px",
+              overflow: "initial",
+              position: "relative"
+            }}
+          >
             <Routes admin={admin} />
           </Content>
-          <Footer style={{ textAlign: "center" }} />
         </Layout>
 
         {globalData.isMobile && ( // 手机端对滚动很慢的处理
