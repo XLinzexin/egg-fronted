@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Icon, Layout, Badge, Popover } from "antd";
+import { Menu, Icon, Layout, Popover } from "antd";
 import screenfull from "screenfull";
 // import { gitOauthToken, gitOauthInfo } from '../../utils/axios';
 import { queryString } from "../../utils";
@@ -47,13 +47,13 @@ class HeaderCustom extends Component {
     this.setState({ visible });
   };
   render() {
-    const { responsive, path } = this.props;
+    const { globalData, path } = this.props;
     return (
       <Header
         style={{ background: "#fff", padding: 0, height: 65 }}
         className="custom-theme"
       >
-        {responsive.data.isMobile ? (
+        {globalData.isMobile ? (
           <Popover
             content={<SiderCustom path={path} popoverHide={this.popoverHide} />}
             trigger="click"
@@ -115,8 +115,8 @@ class HeaderCustom extends Component {
 }
 
 const mapStateToProps = store => {
-  const { responsive = { data: {} } } = store.httpData;
-  return { responsive };
+  const { globalData } = store;
+  return { globalData };
 };
 
 export default withRouter(connect(mapStateToProps)(HeaderCustom));

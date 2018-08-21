@@ -9,6 +9,8 @@ import {
 // import { browserHistory } from 'react-router'
 import Home from "../pages/home/index";
 import EditArticle from "../pages/article/EditArticle";
+import ArticleList from "../pages/article/ArticleList";
+import ArticleDetail from "../pages/article/ArticleDetail";
 // import Convenient from '../pages/advertising/Convenient';
 // import Dofu from '../pages/advertising/Dofu';
 
@@ -44,6 +46,16 @@ class CRouter extends Component {
             exact
             path="/app/article/EditArticle"
             component={this.requireAuth(EditArticle)}
+          />
+          <Route
+            exact
+            path="/app/article/ArticleList"
+            component={this.requireAuth(ArticleList)}
+          />
+          <Route
+            exact
+            path="/app/article/ArticleDetail/:id"
+            component={this.requireAuth(ArticleDetail)}
           />
           <Route render={() => <Redirect to="/404" />} />
         </Switch>

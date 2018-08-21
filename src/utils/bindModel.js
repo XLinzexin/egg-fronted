@@ -1,3 +1,4 @@
+/*  封装双向数据绑定  */
 import { createForm, createFormField } from "rc-form";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -8,9 +9,14 @@ export default function(Component, modelStore, storeArray) {
     const obj = {
       [modelStore]: store[modelStore]
     };
-    storeArray.forEach(item => {
-      obj[item] = store[item];
-    });
+    if (
+      storeArray &&
+      Object.prototype.toString.call(storeArray) === "[object Array]"
+    ) {
+      storeArray.forEach(item => {
+        obj[item] = store[item];
+      });
+    }
     return obj;
   };
   const mapDispatchToProps = dispatch => ({

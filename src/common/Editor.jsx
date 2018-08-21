@@ -1,21 +1,23 @@
 import React from "react";
 import LzEditor from "react-lz-editor";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { editorAction } from "../action";
 class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      htmlContent: `<h1>Yankees, Peeking at the Red Sox, Will Soon Get an Eyeful</h1>
-                <p>Whenever Girardi stole a glance, there was rarely any good news for the Yankees. While Girardi’s charges were clawing their way to a split of their four-game series against the formidable Indians, the Boston Red Sox were plowing past the rebuilding Chicago White Sox, sweeping four games at Fenway Park.</p>`,
-
-      responseList: []
-    };
-    this.receiveHtml = this.receiveHtml.bind(this);
-  }
-  receiveHtml(content) {
-    this.setState({ responseList: [] });
+  state = {
+    responseList: []
+  };
+  receiveHtml = content => {
+    const { editor, setStore } = this.props;
+    editor.content = content;
+    setStore(editorAction.set(editor));
+  };
+  componentWillUnmount() {
+    const { setStore } = this.props;
+    setStore(editorAction.clear());
   }
   render() {
-    let policy = "";
+    const { content } = this.props;
     const uploadProps = {
       action: "http://v0.api.upyun.com/devopee",
       onChange: this.onChange,
@@ -30,7 +32,7 @@ class Editor extends React.Component {
       <div>
         <LzEditor
           active={true}
-          importContent={this.state.htmlContent}
+          importContent={content}
           cbReceiver={this.receiveHtml}
           uploadProps={uploadProps}
           lang="cn"
@@ -41,4 +43,15 @@ class Editor extends React.Component {
   }
 }
 
-export default Editor;
+const mapStateToProps = store => {
+  const { editor } = store;
+  return { editor };
+};
+const mapDispatchToProps = dispatch => ({
+  setStore: bindActionCreators(data => data, dispatch)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Editor);

@@ -1,16 +1,13 @@
 import React from "react";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
-import { getAdminInfo, adminAction, formDataAction } from "../../action";
+import { Form, Icon, Input, Button } from "antd";
 import bindModel from "../../utils/bindModel";
 import axios from "axios";
 
 const FormItem = Form.Item;
 
 class Register extends React.Component {
-  componentWillMount() {}
-  componentWillReceiveProps(nextProps) {}
-  handleSubmit = e => {
-    const { formData, setStore, admin } = this.props;
+  handleSubmit = () => {
+    const { formData } = this.props;
     console.log(formData);
     const { name, password } = formData;
     axios.post("/user", { name, password }).then(res => {
@@ -19,9 +16,8 @@ class Register extends React.Component {
       }
     });
   };
-  componentWillUnmount() {}
   render() {
-    const { getFieldDecorator, getFieldProps, getFieldError } = this.props.form;
+    const { getFieldProps } = this.props.form;
     return (
       <div className="login">
         <div className="login-form">
@@ -74,4 +70,4 @@ class Register extends React.Component {
     );
   }
 }
-export default bindModel(Register, ["formData"]);
+export default bindModel(Register, "formData");
