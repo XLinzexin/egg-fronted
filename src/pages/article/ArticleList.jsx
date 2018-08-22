@@ -17,7 +17,6 @@ class ArticleList extends React.Component {
   }
   async geArticleList() {
     const params = { ...this.state.params };
-    console.log(params);
     const res = await axios.get("/article", { params });
     if (res.code === 1000) {
       const { list, total } = res.data;
@@ -62,7 +61,7 @@ class ArticleList extends React.Component {
       <div>
         <div
           style={{
-            background: "#ECECEC",
+            background: "#f4f4f4",
             padding: "20px 30px",
             marginBottom: "20px",
             height: "586px"
