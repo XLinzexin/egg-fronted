@@ -1,7 +1,8 @@
 import React from "react";
-import { Input, Form, Button, Icon, message } from "antd";
+import { Input, Form, Button, Icon, message, Breadcrumb } from "antd";
+import { Link } from "react-router-dom";
 // import { Form, Icon, Input, Button, Checkbox } from "antd";
-import Editor from "../../common/Editor";
+import Editor from "../../component/Editor";
 import axios from "axios";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -9,9 +10,37 @@ import { bindActionCreators } from "redux";
 const FormItem = Form.Item;
 
 class EditArticle extends React.Component {
+  constructor() {
+    super();
+  }
   state = {
-    content: ``
+    content: ``,
+    articleId: null
   };
+  componentWillMount() {
+    const { articleId } = window.location.query();
+    if (articleId) {
+      this.setState({
+        articleId
+      });
+      this.getArticleDetail();
+    }
+  }
+  async getArticleDetail() {
+    const { articleId } = window.location.query();
+    if (articleId) {
+      const res = await axios.get(`/article/${articleId}/content`);
+      if (res.code === 1000) {
+        const { content, title } = res.data;
+        this.setState({
+          content
+        });
+        this.props.form.setFieldsValue({
+          title
+        });
+      }
+    }
+  }
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -22,19 +51,56 @@ class EditArticle extends React.Component {
         if (!content) {
           message.warning("请输入文章内容");
         } else {
-          axios.post("/article", { title, content }).then(res => {
-            if (res.code == 1000) {
-            }
-          });
+          const { articleId } = window.location.query();
+          if (articleId) {
+            axios
+              .put(`/article/${articleId}/content`, { title, content })
+              .then(res => {
+                if (res.code == 1000) {
+                  message.success(res.msg);
+                  this.props.history.replace(
+                    `/app/article/ArticleDetail/${articleId}`
+                  );
+                }
+              });
+          } else {
+            axios.post("/article", { title, content }).then(res => {
+              if (res.code == 1000) {
+                message.success("发布成功！");
+                this.props.history.replace(
+                  `/app/article/ArticleDetail/${res.data}`
+                );
+              }
+            });
+          }
         }
       }
     });
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { content } = this.state;
+    const { content, articleId } = this.state;
     return (
-      <div>
+      <div className="edit-article">
+        <header>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to="/app/article/ArticleList">文章列表</Link>
+            </Breadcrumb.Item>
+            {articleId ? (
+              <Breadcrumb.Item>
+                <Link to={`/app/article/ArticleDetail/${articleId}`}>
+                  文章详情
+                </Link>
+              </Breadcrumb.Item>
+            ) : (
+              ""
+            )}
+            <Breadcrumb.Item>
+              {articleId ? "编辑文章" : "新建文章"}
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </header>
         <Form onSubmit={this.handleSubmit} className="section-form">
           <FormItem className="section-form-item">
             {getFieldDecorator("title", {
@@ -53,12 +119,10 @@ class EditArticle extends React.Component {
 
           <FormItem className="section-form-item">
             <Button type="primary" htmlType="submit">
-              保存
+              {articleId ? "修改" : "发布"}
             </Button>
           </FormItem>
         </Form>
-
-        <style>{``}</style>
       </div>
     );
   }

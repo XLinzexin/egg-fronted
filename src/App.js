@@ -7,7 +7,7 @@ import { globalDataAction } from "./action";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Routes from "./routes";
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 class App extends Component {
   state = {

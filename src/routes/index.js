@@ -33,7 +33,6 @@ class CRouter extends Component {
     }
   };
   render() {
-    const { admin } = this.props;
     return (
       <Router>
         <Switch>

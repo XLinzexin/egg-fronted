@@ -13,7 +13,7 @@ class CommentArea extends React.Component {
     const { comment } = this.props;
     const commentList = [];
     return (
-      <div>
+      <div className="comment-area">
         <List
           // loading={loading}
           itemLayout="horizontal"
@@ -65,13 +65,13 @@ class CommentArea extends React.Component {
           )}
         />
         <style>{`
-          .comment-item{
+          .comment-area .comment-item{
             border-top:1px solid #e8e8e8;
           }
-          .comment-item:last-child{
+          .comment-area .comment-item:last-child{
             border-bottom:1px solid #e8e8e8;
           }
-          .dialogue-item{
+          .comment-area .dialogue-item{
             padding:0 30px;
           }
         `}</style>

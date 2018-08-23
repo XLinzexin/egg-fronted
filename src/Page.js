@@ -12,10 +12,11 @@ import App from "./App";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { adminAction } from "./action";
+import "./utils/tools";
 
 class Page extends Component {
   componentWillMount() {
-    const { admin, setStore } = this.props;
+    const { setStore } = this.props;
     if (sessionStorage.getItem("sessionId")) {
       setStore(
         adminAction.set({
