@@ -29,6 +29,19 @@ class ArticleDetail extends React.Component {
       });
     }
   };
+  getArticleComment = async () => {
+    const { id } = this.props.match.params;
+    const res = await axios.get(`/article/${id}/comment`, {
+      pageSize: 4,
+      dialogueCount: 3
+    });
+    if (res.code === 1000) {
+      const { list } = res.data;
+      this.setState({
+        comment: list
+      });
+    }
+  };
   changeModal = status => {
     this.setState({
       showModal: status
@@ -41,7 +54,7 @@ class ArticleDetail extends React.Component {
       message.success("删除成功！");
       this.props.history.replace("/app/article/ArticleList");
     } else {
-      message.success("删除失败！");
+      message.error("删除失败！");
     }
   };
   render() {
@@ -99,7 +112,12 @@ class ArticleDetail extends React.Component {
               </Button>
             </div>
             {comment.length > 0 ? (
-              <CommentArea comment={comment} />
+              <CommentArea
+                comment={comment}
+                deleteComment={() => {
+                  this.getArticleComment();
+                }}
+              />
             ) : (
               <CommentArea comment={[]} />
             )}
@@ -115,7 +133,13 @@ class ArticleDetail extends React.Component {
           footer={null}
         >
           {showModal ? (
-            <CommentForm articleId={articleId} onCommentFinish={() => {}} />
+            <CommentForm
+              articleId={articleId}
+              onCommentFinish={() => {
+                this.getArticleComment();
+                this.changeModal(false);
+              }}
+            />
           ) : (
             ""
           )}

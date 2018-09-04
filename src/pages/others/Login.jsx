@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button } from "antd";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import axios from "axios";
+import { adminAction } from "../../action";
 
 const FormItem = Form.Item;
 
@@ -16,6 +17,10 @@ class Login extends React.Component {
         axios.post("/user/session", { name, password }).then(res => {
           if (res.code == 1000) {
             // window.location.replace("#/app/home/index");
+            let { setStore, admin } = this.props;
+            admin = res.data;
+            window.localStorage.setItem("admin", JSON.stringify(admin));
+            setStore(adminAction.set(admin));
             this.props.history.push("/app/home/index");
           }
         });

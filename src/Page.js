@@ -17,12 +17,9 @@ import "./utils/tools";
 class Page extends Component {
   componentWillMount() {
     const { setStore } = this.props;
-    if (sessionStorage.getItem("sessionId")) {
-      setStore(
-        adminAction.set({
-          login: true
-        })
-      );
+    const admin = window.localStorage.getItem("admin");
+    if (admin) {
+      setStore(adminAction.set(JSON.parse(admin)));
     }
   }
   render() {

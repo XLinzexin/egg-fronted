@@ -9,12 +9,17 @@ const FormItem = Form.Item;
 class CommentForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    const { form, onCommentFinish } = this.props;
+    form.validateFields((err, values) => {
       if (!err) {
         const { articleId } = this.props;
         const { comment } = values;
         axios.post(`/article/${articleId}/comment`, { comment }).then(res => {
           if (res.code == 1000) {
+            onCommentFinish();
+            message.success("发布成功！");
+          } else {
+            message.error(res.msg);
           }
         });
       }

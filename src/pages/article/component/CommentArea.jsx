@@ -1,5 +1,8 @@
 import React from "react";
+import axios from "axios";
 import { List, Avatar, Button, Spin } from "antd";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 class CommentArea extends React.Component {
   state = {
@@ -9,9 +12,13 @@ class CommentArea extends React.Component {
     const { comment } = this.props;
     this.setState(comment);
   }
+  createDialogue() {}
+  deleteComment = async id => {
+    // const await axios.delete
+  };
   render() {
-    const { comment } = this.props;
-    const commentList = [];
+    const { comment, admin } = this.props;
+    console.log(admin);
     return (
       <div className="comment-area">
         <List
@@ -22,7 +29,23 @@ class CommentArea extends React.Component {
           dataSource={comment}
           renderItem={item => (
             <div className="comment-item">
-              <List.Item actions={[<a>回复</a>, <a>赞</a>]}>
+              <List.Item
+                actions={(() => {
+                  const actions = [<a>回复</a>];
+                  if (item.userId === admin.id) {
+                    actions.push(
+                      <a
+                        onClick={() => {
+                          this.deleteComment(item.id);
+                        }}
+                      >
+                        删除
+                      </a>
+                    );
+                  }
+                  return actions;
+                })()}
+              >
                 <List.Item.Meta
                   avatar={
                     <Avatar
@@ -43,7 +66,7 @@ class CommentArea extends React.Component {
                   dataSource={item.dialogue}
                   locale={{ emptyText: "暂无回复" }}
                   renderItem={it => (
-                    <List.Item actions={[<a>回复</a>, <a>赞</a>]}>
+                    <List.Item actions={[<a>回复</a>, <a>删除</a>]}>
                       <List.Item.Meta
                         avatar={
                           <Avatar
@@ -80,4 +103,19 @@ class CommentArea extends React.Component {
   }
 }
 
-export default CommentArea;
+// export default CommentArea;
+
+const mapStateToProps = store => {
+  return {
+    admin: store.admin
+  };
+};
+const mapDispatchToProps = dispatch => ({
+  //把 dispatch 绑定到方法中，隐式调用
+  setStore: bindActionCreators(data => data, dispatch)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CommentArea);
