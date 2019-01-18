@@ -60,7 +60,7 @@ class Register extends React.Component {
                 htmlType="submit"
                 style={{ width: "100%" }}
               >
-                登录
+                注册
               </Button>
             </FormItem>
           </Form>
